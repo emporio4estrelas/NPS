@@ -16,14 +16,14 @@ namespace PesquisaSatisfacaoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Pesquisa pesquisa)
+        public IActionResult Post([FromBody] PesquisaResposta pesquisa)
         {
             if (pesquisa == null)
                 return BadRequest("Dados inválidos.");
 
             try
             {
-                _context.Pesquisas?.Add(pesquisa);
+                _context.PesquisasResposta?.Add(pesquisa);
                 _context.SaveChanges();
                 return Ok(new { mensagem = "Dados salvos com sucesso!" });
             }
