@@ -23,7 +23,7 @@ namespace PesquisaSatisfacaoApi.Controllers
 
             try
             {
-                _context.PesquisasResposta?.Add(pesquisa);
+                _context.PesquisaResposta?.Add(pesquisa);
                 _context.SaveChanges();
                 return Ok(new { mensagem = "Dados salvos com sucesso!" });
             }
