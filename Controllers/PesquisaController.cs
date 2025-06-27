@@ -5,7 +5,7 @@ using PesquisaSatisfacaoApi.Models;
 namespace PesquisaSatisfacaoApi.Controllers
 {
     [ApiController]
-    [Route("api/pesquisa")]
+    [Route("api/[controller]")]
     public class PesquisaController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -16,23 +16,21 @@ namespace PesquisaSatisfacaoApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostResposta([FromBody] dynamic payload)
+        public IActionResult Post([FromBody] Pesquisa pesquisa)
         {
-            if (payload == null || payload.q1 == null || payload.q2 == null)
-                return BadRequest("Respostas incompletas.");
+            if (pesquisa == null)
+                return BadRequest("Dados inválidos.");
 
-            var resposta = new PesquisaResposta
+            try
             {
-                Q1 = payload.q1,
-                Q2 = payload.q2,
-                Comentario = payload.comentario ?? "",
-                Pdv = payload.pdv ?? "Desconhecido"
-            };
-
-            _context.Respostas.Add(resposta);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Resposta salva com sucesso." });
+                _context.Pesquisas?.Add(pesquisa);
+                _context.SaveChanges();
+                return Ok(new { mensagem = "Dados salvos com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao salvar dados: {ex.Message}");
+            }
         }
     }
 }
