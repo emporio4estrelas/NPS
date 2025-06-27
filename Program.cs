@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite("Data Source=pesquisa.db"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")                    ?? Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
