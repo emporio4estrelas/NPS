@@ -32,5 +32,11 @@ namespace PesquisaSatisfacaoApi.Controllers
                 return StatusCode(500, $"Erro ao salvar dados: {ex.Message}");
             }
         }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var respostas = _context.Respostas?.ToList();
+            return Ok(respostas);
+        }
     }
 }
